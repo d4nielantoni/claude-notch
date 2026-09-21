@@ -74,6 +74,7 @@
 		11F748732EC9DA9300F841DB /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 11F748722EC9DA9300F841DB /* Lottie */; };
 		11F748822ECB07A400F841DB /* MusicControlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F748812ECB07A400F841DB /* MusicControlButton.swift */; };
 		11F748842ECB27DC00F841DB /* MusicSlotConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F748832ECB27DC00F841DB /* MusicSlotConfigurationView.swift */; };
+		1255523CF4911C41BB8813C4 /* ClaudeSessionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21D91B1FB106ACE587D9D0D /* ClaudeSessionRow.swift */; };
 		14288DDC2C6E015000B9F80C /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14288DD62C6E015000B9F80C /* AudioPlayer.swift */; };
 		14288DE82C6E01C800B9F80C /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14288DE72C6E01C800B9F80C /* ProgressIndicator.swift */; };
 		14288E0C2C6F8EC000B9F80C /* AppIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14288E0B2C6F8EC000B9F80C /* AppIcons.swift */; };
@@ -149,11 +150,13 @@
 		B1F747F92EC7E94000F841DB /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F747F82EC7E94000F841DB /* LottieView.swift */; };
 		B1FEB4992C7686630066EBBC /* PanGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FEB4982C7686630066EBBC /* PanGesture.swift */; };
 		BC1C3BC3D527E74ABF0A45C9 /* ClaudeBridgeContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DA22738CD3AE486241C116 /* ClaudeBridgeContract.swift */; };
+		CD5A5D2B2D26952BB945AB4E /* ClaudeNotchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F4006D8B3810E3151C4A4C /* ClaudeNotchView.swift */; };
 		CDD4D6ACA2C54A9555071A92 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9831F575CA17DFE9C3D4D6 /* Cocoa.framework */; };
 		DBBF140C3364835D447B643E /* ClaudeBridgeServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734B2F0ED06F587232CEA18 /* ClaudeBridgeServer.swift */; };
 		DCD51F1E9B28F7B9C5BF97B8 /* ClaudeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECB4168B355FB2A73CDA9ED /* ClaudeManager.swift */; };
 		EE0DC001A8FDCD239EB8816D /* ClaudeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59FDB314A153A2248C55B923 /* ClaudeSession.swift */; };
 		F38DE6482D8243E7008B5C6D /* BatteryActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38DE6472D8243E2008B5C6D /* BatteryActivityManager.swift */; };
+		F9C739CEC3E50CC2FFB440F7 /* ClaudeLimitGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB01CF307653534C47D59A1 /* ClaudeLimitGauge.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -314,6 +317,7 @@
 		59D8C23B2E589FAA00147B33 /* VolumeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeManager.swift; sourceTree = "<group>"; };
 		59FDB314A153A2248C55B923 /* ClaudeSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClaudeSession.swift; sourceTree = "<group>"; };
 		7734B2F0ED06F587232CEA18 /* ClaudeBridgeServer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeBridgeServer.swift; path = Claude/ClaudeBridgeServer.swift; sourceTree = "<group>"; };
+		79F4006D8B3810E3151C4A4C /* ClaudeNotchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeNotchView.swift; path = Claude/ClaudeNotchView.swift; sourceTree = "<group>"; };
 		9A0887312C7A693000C160EA /* TabButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButton.swift; sourceTree = "<group>"; };
 		9A0887342C7AFF8E00C160EA /* TabSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectionView.swift; sourceTree = "<group>"; };
 		9A987A032C73CA66005CA465 /* ShelfView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShelfView.swift; sourceTree = "<group>"; };
@@ -346,8 +350,10 @@
 		BECB4168B355FB2A73CDA9ED /* ClaudeManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClaudeManager.swift; sourceTree = "<group>"; };
 		C68D8EF979332A02D5445377 /* ClaudeIntegrationInstaller.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeIntegrationInstaller.swift; path = Claude/ClaudeIntegrationInstaller.swift; sourceTree = "<group>"; };
 		C7B912DAB6F6DC524AE49D25 /* ClaudeNotchBridge */ = {isa = PBXFileReference; includeInIndex = 0; path = ClaudeNotchBridge; sourceTree = BUILT_PRODUCTS_DIR; };
+		E21D91B1FB106ACE587D9D0D /* ClaudeSessionRow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeSessionRow.swift; path = Claude/ClaudeSessionRow.swift; sourceTree = "<group>"; };
 		F38DE6472D8243E2008B5C6D /* BatteryActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryActivityManager.swift; sourceTree = "<group>"; };
 		FA9831F575CA17DFE9C3D4D6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		FCB01CF307653534C47D59A1 /* ClaudeLimitGauge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeLimitGauge.swift; path = Claude/ClaudeLimitGauge.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -571,6 +577,7 @@
 				B10F84A22C6C9596009F3026 /* TestView.swift */,
 				507266DA2C908E2E00A2D00D /* HoverButton.swift */,
 				B1F747F82EC7E94000F841DB /* LottieView.swift */,
+				94E4854A1E35415DCF5FF98C /* Claude */,
 			);
 			path = components;
 			sourceTree = "<group>";
@@ -718,6 +725,16 @@
 				09DA22738CD3AE486241C116 /* ClaudeBridgeContract.swift */,
 				7734B2F0ED06F587232CEA18 /* ClaudeBridgeServer.swift */,
 				C68D8EF979332A02D5445377 /* ClaudeIntegrationInstaller.swift */,
+			);
+			name = Claude;
+			sourceTree = "<group>";
+		};
+		94E4854A1E35415DCF5FF98C /* Claude */ = {
+			isa = PBXGroup;
+			children = (
+				FCB01CF307653534C47D59A1 /* ClaudeLimitGauge.swift */,
+				79F4006D8B3810E3151C4A4C /* ClaudeNotchView.swift */,
+				E21D91B1FB106ACE587D9D0D /* ClaudeSessionRow.swift */,
 			);
 			name = Claude;
 			sourceTree = "<group>";
@@ -1144,6 +1161,9 @@
 				DCD51F1E9B28F7B9C5BF97B8 /* ClaudeManager.swift in Sources */,
 				EE0DC001A8FDCD239EB8816D /* ClaudeSession.swift in Sources */,
 				98B78CC8466C3CFF24BA3221 /* ClaudeIntegrationInstaller.swift in Sources */,
+				F9C739CEC3E50CC2FFB440F7 /* ClaudeLimitGauge.swift in Sources */,
+				CD5A5D2B2D26952BB945AB4E /* ClaudeNotchView.swift in Sources */,
+				1255523CF4911C41BB8813C4 /* ClaudeSessionRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
