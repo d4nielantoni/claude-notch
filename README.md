@@ -1,46 +1,48 @@
-> ## 🍴 Este é um fork
+> ## 🍴 This is a fork
 >
-> **claude-notch** = [boring.notch](https://github.com/TheBoredTeam/boring.notch) + visibilidade do Claude Code.
+> **claude-notch** = [boring.notch](https://github.com/TheBoredTeam/boring.notch) + Claude Code visibility.
 >
-> O notch mostra, de relance, se o Claude Code está trabalhando e quanto do limite
-> de uso da conta já foi consumido — sem ler credenciais e sem chamadas de rede.
+> The notch tells you, at a glance, whether Claude Code is working and how much of your
+> usage limit is gone — without reading any credential and without a single network call.
 >
-> ### Como funciona
+> ### Where the data comes from
 >
-> | Dado | De onde vem |
+> | What you see | Source |
 > |---|---|
-> | Estado da sessão (trabalhando, esperando você, parado) | ganchos de evento do Claude Code |
-> | % dos limites de 5 horas e 7 dias, e quando zeram | barra de status do Claude Code |
-> | Contexto ocupado, custo, modelo, projeto | barra de status do Claude Code |
+> | Session state (working, waiting on you, idle) | Claude Code event hooks |
+> | 5-hour and 7-day limit usage, and when each resets | Claude Code status line |
+> | Context used, cost, model, project | Claude Code status line |
 >
-> Um executável minúsculo (`claude-notch-bridge`), embutido em `Contents/Helpers`, é
-> chamado pelo Claude Code e entrega os dados ao app por um soquete de domínio Unix
-> dentro do contêiner do sandbox. Nenhuma credencial é lida; nenhuma requisição sai
-> da máquina.
+> A tiny executable (`claude-notch-bridge`), embedded in `Contents/Helpers`, is invoked by
+> Claude Code and hands the data to the app over a Unix domain socket inside the sandbox
+> container. Nothing is read from your keychain; nothing leaves the machine.
 >
-> ### Instalar
+> The app is display-only: it never approves, denies or interrupts anything.
+>
+> ### Install
 >
 > ```bash
-> ruby tools/xcode-sync.rb   # só na primeira vez, cria o alvo da ponte
-> ./tools/instalar.sh        # compila em Release, instala e assina
+> ruby tools/xcode-sync.rb   # first time only — creates the bridge target
+> ./tools/install.sh        # builds Release, installs to /Applications, re-signs
 > ```
 >
-> Depois, no app: **Preferências → Claude → Install integration…**. Ele pede a pasta
-> `~/.claude` uma vez, faz backup do `settings.json` e **soma** os ganchos aos que você
-> já tiver. Remover restaura o arquivo original.
+> Then, in the app: **Settings → Claude → Install integration…**. It asks for your
+> `~/.claude` folder once, backs up `settings.json`, and **adds** its hooks alongside any
+> you already have. Removing the integration restores the original file.
 >
-> ### Diferenças em relação ao upstream
+> ### How this differs from upstream
 >
-> - **A auto-atualização está desligada.** O `SUFeedURL` herdado apontava para o appcast
->   do boring.notch original; como as versões coincidem, o primeiro release deles seria
->   instalado por cima e levaria este módulo junto. Atualizar aqui é `git pull` + rebuild.
-> - O app continua com **sandbox ligado**. `tools/instalar.sh` reassina o pacote inteiro
->   porque o `MediaRemoteAdapter.framework` vem assinado por outra equipe e o dyld recusa
->   Team IDs misturados.
+> - **Auto-update is off.** The inherited `SUFeedURL` pointed at the original boring.notch
+>   appcast; since the versions match, their next release would install over this fork and
+>   take the Claude module with it. Updating here means `git pull` + rebuild.
+> - **The app sandbox stays on.** `tools/install.sh` re-signs the whole bundle, because
+>   `MediaRemoteAdapter.framework` ships signed by another team and dyld refuses to load a
+>   framework whose Team ID differs from the process.
 >
-> O design e o plano de implementação estão em [`docs/superpowers/`](docs/superpowers/).
+> Design notes and the implementation plan live in [`docs/superpowers/`](docs/superpowers/)
+> (written in Portuguese).
 >
-> Licença: **GPL-3.0**, herdada do upstream. Todo o crédito do app abaixo é do
+> License: **GPL-3.0**, inherited from upstream. All credit for the app below goes to
 > [TheBoredTeam](https://github.com/TheBoredTeam/boring.notch).
 
 ---
