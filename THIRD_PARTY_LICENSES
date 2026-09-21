@@ -431,3 +431,13 @@ Exhibit B - "Incompatible With Secondary Licenses" Notice
 
 This Source Code Form is "Incompatible With Secondary Licenses", as
 defined by the Mozilla Public License, v. 2.0.
+
+================================================================================
+ClaudeIsland (vibe-notch) — https://github.com/farouqaldori/vibe-notch
+Licensed under the Apache License, Version 2.0.
+
+The pixel-art crab in boringNotch/components/Live activities/ClaudeCrab.swift
+is a port of ClaudeCrabIcon from that project: its proportions, leg positions
+and four-phase walk cycle come from there. Apache-2.0 permits inclusion in a
+GPL-3.0 work; this notice preserves the attribution.
+================================================================================

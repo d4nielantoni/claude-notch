@@ -2,8 +2,8 @@
 //  ClaudeLiveActivity.swift
 //  boringNotch
 //
-//  Notch fechado: asterisco do Claude enquanto ele trabalha, e um anel com o
-//  consumo do limite de 5 horas.
+//  Notch fechado: o caranguejo do Claude andando enquanto ele trabalha, e um
+//  anel com o consumo do limite de 5 horas.
 //
 
 import Defaults
@@ -82,7 +82,7 @@ struct ClaudeLiveActivity: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            ClaudeAsterisk(working: working, size: max(11, side * 0.80))
+            ClaudeCrab(size: max(11, side * 0.74), walking: working)
                 .frame(width: side, height: side)
 
             // Com notch físico reserva o recorte; sem ele, só empurra os
