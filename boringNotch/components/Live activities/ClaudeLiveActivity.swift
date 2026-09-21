@@ -2,13 +2,8 @@
 //  ClaudeLiveActivity.swift
 //  boringNotch
 //
-//  O que aparece no notch fechado: o asterisco do Claude se mexendo enquanto
-//  ele trabalha, e um anel fino que enche conforme o limite de 5 horas queima.
-//
-//  A caixa do notch NÃO pode crescer por causa disto. Tudo aqui se amarra à
-//  altura do notch e flui ao redor dele, como as outras atividades ao vivo —
-//  num monitor externo, onde o notch é desenhado e não físico, qualquer folga
-//  a mais fica evidente.
+//  Notch fechado: asterisco do Claude enquanto ele trabalha, e um anel com o
+//  consumo do limite de 5 horas.
 //
 
 import Defaults
@@ -17,21 +12,18 @@ import SwiftUI
 /// Laranja da marca do Claude, o mesmo do asterisco no terminal.
 private let claudeOrange = Color(red: 0.85, green: 0.47, blue: 0.34)
 
-/// O asterisco que pisca no Claude Code. Os glifos são os mesmos da CLI, na
-/// mesma ordem: ele parece "respirar" em vez de girar.
+/// O asterisco que pisca no Claude Code, com os glifos da própria CLI.
 struct ClaudeAsterisk: View {
     let working: Bool
     let size: CGFloat
 
-    // Os mesmos glifos da CLI do Claude Code, menos o "·" — num notch de
-    // ~26pt ele vira uma sujeirinha em vez de leitura de estado.
+    // Sem o "·" da CLI: num notch de ~26pt ele vira sujeira, não estado.
     private static let glyphs = ["✢", "✳", "∗", "✻", "✽"]
     private let timer = Timer.publish(every: 0.15, on: .main, in: .common).autoconnect()
 
     @State private var phase = 0
 
     private var glyph: String {
-        // Parado, fica no asterisco cheio: presença sem agitação.
         working ? Self.glyphs[phase % Self.glyphs.count] : "✳"
     }
 
@@ -41,8 +33,7 @@ struct ClaudeAsterisk: View {
             .foregroundStyle(claudeOrange)
             .frame(width: size * 1.2, height: size * 1.2)
             .onReceive(timer) { _ in
-                // Só avança quando há trabalho: parado, nada pisca à toa.
-                guard working else { return }
+                guard working else { return }   // parado, nada pisca à toa
                 phase &+= 1
             }
     }
@@ -51,13 +42,9 @@ struct ClaudeAsterisk: View {
 struct ClaudeLiveActivity: View {
     /// Toda a geometria vem de fora: quem manda no tamanho é o notch.
     let notchHeight: CGFloat
-    /// Largura do recorte a evitar. Só importa quando o notch é físico.
     let notchWidth: CGFloat
-    /// Numa tela com notch de verdade, o miolo é buraco na tela: desenhar ali
-    /// esconde o conteúdo. Aí o indicador se abre para os dois lados, como a
-    /// música faz. Numa tela sem notch, a caixa é desenhada e o miolo é
-    /// visível, então ficar compacto no centro é o certo — abrir seria só
-    /// inchar a caixa à toa.
+    /// Num notch físico o miolo é buraco na tela, e o que for desenhado ali
+    /// some. Muda o layout, não só a estética.
     let hasPhysicalNotch: Bool
 
     @ObservedObject var claude = ClaudeManager.shared
@@ -98,20 +85,16 @@ struct ClaudeLiveActivity: View {
             ClaudeAsterisk(working: working, size: max(11, side * 0.80))
                 .frame(width: side, height: side)
 
-            // Com notch físico, o espaçador reserva o recorte — o que cair
-            // ali fica invisível. Sem notch físico ele é só elástico, e
-            // empurra os dois elementos para as pontas da caixa, que é o
-            // mesmo arranjo visual, sem precisar esticar nada.
+            // Com notch físico reserva o recorte; sem ele, só empurra os
+            // dois para as pontas.
             Spacer(minLength: hasPhysicalNotch ? notchWidth : 0)
 
             ring
         }
         .padding(.horizontal, 8)
-        // Com notch físico a caixa PRECISA crescer, para o conteúdo sobrar
-        // dos dois lados do recorte. Sem notch físico ela mantém a largura
-        // padrão e o conteúdo fica centralizado dentro: deixar o conteúdo
-        // ditar a largura faria a caixa encolher quando o Claude trabalha e
-        // voltar ao normal quando para — um pulo a cada evento.
+        // Com notch físico a caixa cresce para o conteúdo sobrar dos lados.
+        // Sem ele, largura fixa: deixar o conteúdo mandar faria a caixa
+        // encolher e voltar a cada evento.
         .frame(
             width: hasPhysicalNotch ? nil : notchWidth,
             height: notchHeight,

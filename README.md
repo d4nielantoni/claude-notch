@@ -1,3 +1,50 @@
+> ## 🍴 Este é um fork
+>
+> **claude-notch** = [boring.notch](https://github.com/TheBoredTeam/boring.notch) + visibilidade do Claude Code.
+>
+> O notch mostra, de relance, se o Claude Code está trabalhando e quanto do limite
+> de uso da conta já foi consumido — sem ler credenciais e sem chamadas de rede.
+>
+> ### Como funciona
+>
+> | Dado | De onde vem |
+> |---|---|
+> | Estado da sessão (trabalhando, esperando você, parado) | ganchos de evento do Claude Code |
+> | % dos limites de 5 horas e 7 dias, e quando zeram | barra de status do Claude Code |
+> | Contexto ocupado, custo, modelo, projeto | barra de status do Claude Code |
+>
+> Um executável minúsculo (`claude-notch-bridge`), embutido em `Contents/Helpers`, é
+> chamado pelo Claude Code e entrega os dados ao app por um soquete de domínio Unix
+> dentro do contêiner do sandbox. Nenhuma credencial é lida; nenhuma requisição sai
+> da máquina.
+>
+> ### Instalar
+>
+> ```bash
+> ruby tools/xcode-sync.rb   # só na primeira vez, cria o alvo da ponte
+> ./tools/instalar.sh        # compila em Release, instala e assina
+> ```
+>
+> Depois, no app: **Preferências → Claude → Install integration…**. Ele pede a pasta
+> `~/.claude` uma vez, faz backup do `settings.json` e **soma** os ganchos aos que você
+> já tiver. Remover restaura o arquivo original.
+>
+> ### Diferenças em relação ao upstream
+>
+> - **A auto-atualização está desligada.** O `SUFeedURL` herdado apontava para o appcast
+>   do boring.notch original; como as versões coincidem, o primeiro release deles seria
+>   instalado por cima e levaria este módulo junto. Atualizar aqui é `git pull` + rebuild.
+> - O app continua com **sandbox ligado**. `tools/instalar.sh` reassina o pacote inteiro
+>   porque o `MediaRemoteAdapter.framework` vem assinado por outra equipe e o dyld recusa
+>   Team IDs misturados.
+>
+> O design e o plano de implementação estão em [`docs/superpowers/`](docs/superpowers/).
+>
+> Licença: **GPL-3.0**, herdada do upstream. Todo o crédito do app abaixo é do
+> [TheBoredTeam](https://github.com/TheBoredTeam/boring.notch).
+
+---
+
 <h1 align="center">
   <br>
   <a href="http://theboring.name"><img src="https://framerusercontent.com/images/RFK4vs0kn8pRMuOO58JeyoemXA.png?scale-down-to=256" alt="Boring Notch" width="150"></a>

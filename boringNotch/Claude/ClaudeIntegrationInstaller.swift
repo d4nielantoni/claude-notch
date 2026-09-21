@@ -64,12 +64,12 @@ final class ClaudeIntegrationInstaller {
 
     // MARK: Autorização
 
-    /// Abre o seletor já na pasta certa. A caixa de areia exige que o usuário
+    /// Abre o seletor já na pasta certa. O sandbox exige que o usuário
     /// aponte a PASTA; depois disso o marcador persiste e isso não se repete.
     ///
     /// É a pasta, e não o arquivo, porque escrever settings.json com segurança
     /// exige dois vizinhos dele: o backup e o temporário da escrita atômica.
-    /// Com autorização só do arquivo, a caixa de areia bloquearia os dois.
+    /// Com autorização só do arquivo, o sandbox bloquearia os dois.
     @MainActor
     func requestAccess() async -> Bool {
         let panel = NSOpenPanel()

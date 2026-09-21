@@ -39,7 +39,7 @@ if bridge.nil?
     config.build_settings['PRODUCT_NAME'] = BRIDGE_PRODUCT
     config.build_settings['SWIFT_VERSION'] = swift_version
     config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = deployment
-    # A ponte roda FORA da caixa de areia: quem a invoca é o Claude Code.
+    # A ponte roda FORA do sandbox: quem a invoca é o Claude Code.
     config.build_settings['ENABLE_APP_SANDBOX'] = 'NO'
     config.build_settings['CODE_SIGN_STYLE'] = 'Automatic'
     config.build_settings['SKIP_INSTALL'] = 'YES'

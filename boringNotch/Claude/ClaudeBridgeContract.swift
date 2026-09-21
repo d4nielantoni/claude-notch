@@ -2,8 +2,7 @@
 //  ClaudeBridgeContract.swift
 //  claude-notch
 //
-//  Contrato compartilhado entre o app e o executável da ponte.
-//  Este arquivo DEVE ser membro dos dois alvos.
+//  Contrato compartilhado. DEVE ser membro dos dois alvos de build.
 //
 
 import Foundation
@@ -16,8 +15,7 @@ public enum ClaudeBridgeKind: String, Codable {
     case statusline
 }
 
-/// Envelope versionado. O payload viaja como texto cru para que nenhum campo
-/// novo do Claude Code se perca antes de chegar no app.
+/// O payload viaja como texto cru para não perder campos novos do Claude Code.
 public struct ClaudeBridgeEnvelope: Codable {
     public var v: Int = 1
     public let kind: ClaudeBridgeKind
@@ -45,8 +43,7 @@ public struct ClaudeBridgeEnvelope: Codable {
     }
 }
 
-/// Campos que interessam de um gancho. Todos opcionais de propósito:
-/// o Claude Code evolui, e um campo ausente não pode derrubar o app.
+/// Todos opcionais de propósito: campo ausente não pode derrubar o app.
 public struct ClaudeHookPayload: Decodable {
     public let hookEventName: String?
     public let sessionId: String?
@@ -96,11 +93,10 @@ public enum ClaudeBridgeContract {
 }
 
 public enum ClaudeBridgePaths {
-    /// Nome curto de propósito: o caminho completo precisa caber em 104 bytes,
-    /// que é o limite do sistema para soquetes de domínio Unix.
+    /// Curto de propósito: sun_path tem limite de 104 bytes.
     private static let socketFileName = "cn.sock"
 
-    /// Dentro da caixa de areia, NSHomeDirectory() já aponta para <contêiner>/Data.
+    /// Dentro do sandbox, NSHomeDirectory() já aponta para <contêiner>/Data.
     /// Fora dela, aponta para a pasta pessoal real e o contêiner precisa ser montado.
     public static func socketPath(sandboxed: Bool) -> String {
         let home = NSHomeDirectory()

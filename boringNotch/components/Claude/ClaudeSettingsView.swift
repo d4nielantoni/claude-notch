@@ -107,7 +107,7 @@ struct ClaudeSettings: View {
         errorMessage = nil
         Task { @MainActor in
             defer { busy = false }
-            // A caixa de areia exige que o usuário aponte a pasta uma vez.
+            // O sandbox exige que o usuário aponte a pasta uma vez.
             guard await ClaudeIntegrationInstaller.shared.requestAccess() else {
                 errorMessage = "Authorization cancelled."
                 return
