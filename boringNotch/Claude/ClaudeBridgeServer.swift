@@ -54,11 +54,15 @@ final class ClaudeBridgeServer {
                 }
             }
 
+            // O arquivo do soquete precisa nascer 0600, não virar 0600 depois:
+            // entre o bind e o chmod existe uma janela em que ele fica aberto.
+            let umaskAnterior = umask(0o077)
             let bound = withUnsafePointer(to: &addr) { raw in
                 raw.withMemoryRebound(to: sockaddr.self, capacity: 1) {
                     bind(fd, $0, socklen_t(MemoryLayout<sockaddr_un>.size))
                 }
             }
+            umask(umaskAnterior)
             guard bound == 0, listen(fd, 16) == 0 else {
                 NSLog("[claude-notch] não consegui escutar em \(path)")
                 close(fd)
@@ -96,11 +100,17 @@ final class ClaudeBridgeServer {
         guard client >= 0 else { return }
         defer { close(client) }
 
+        // Sem timeout, um cliente que conecta e não fala bloqueia esta fila
+        // serial para sempre — e com ela o aceite de novas conexões e o stop().
+        var tv = timeval(tv_sec: 1, tv_usec: 0)
+        setsockopt(client, SOL_SOCKET, SO_RCVTIMEO, &tv, socklen_t(MemoryLayout<timeval>.size))
+
         var data = Data()
         var buffer = [UInt8](repeating: 0, count: 8192)
         while true {
             let n = read(client, &buffer, buffer.count)
-            if n <= 0 { break }
+            if n < 0 && errno == EINTR { continue }   // sinal, não fim de dados
+            if n <= 0 { break }                       // EOF, erro ou timeout
             data.append(contentsOf: buffer[0..<n])
             // Proteção contra remetente maluco.
             if data.count > 4_000_000 { return }
