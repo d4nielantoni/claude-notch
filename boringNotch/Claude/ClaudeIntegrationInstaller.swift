@@ -16,6 +16,7 @@ enum ClaudeInstallError: LocalizedError {
     case malformedSettings
     case statusLineTaken(String)
     case bridgeMissing
+    case backupFailed(String)
 
     var errorDescription: String? {
         switch self {
@@ -29,6 +30,8 @@ enum ClaudeInstallError: LocalizedError {
             return "You already have a status line configured (\(cmd)). Refusing to overwrite it."
         case .bridgeMissing:
             return "Could not find the bridge inside the app bundle."
+        case .backupFailed(let reason):
+            return "Could not write a backup of settings.json (\(reason)). Refusing to modify it."
         }
     }
 }
@@ -95,6 +98,21 @@ final class ClaudeIntegrationInstaller {
             relativeTo: nil,
             bookmarkDataIsStale: &stale
         ) else { throw ClaudeInstallError.noAccess }
+
+        // Marcador obsoleto (pasta movida ou renomeada): regrava agora. Sem isto
+        // ele degrada em silêncio até exigir reautorização sem explicação.
+        if stale {
+            url.accessSecurityScopedResource { scoped in
+                if let novo = try? scoped.bookmarkData(
+                    options: .withSecurityScope,
+                    includingResourceValuesForKeys: nil,
+                    relativeTo: nil
+                ) {
+                    Defaults[.claudeSettingsBookmark] = novo
+                }
+            }
+        }
+
         return url
     }
 
@@ -112,10 +130,13 @@ final class ClaudeIntegrationInstaller {
             var json = try loadSettings(url)
 
             // Barra de status: nunca sobrescreve a do usuário.
-            if let existing = json["statusLine"] as? [String: Any],
-               let cmd = existing["command"] as? String,
-               !cmd.contains("claude-notch-bridge") {
-                throw ClaudeInstallError.statusLineTaken(cmd)
+            // Qualquer statusLine que não seja reconhecidamente nossa é do usuário
+            // e não se toca — inclusive uma malformada, que antes escapava.
+            if let existing = json["statusLine"] {
+                let cmd = (existing as? [String: Any])?["command"] as? String
+                if cmd?.contains("claude-notch-bridge") != true {
+                    throw ClaudeInstallError.statusLineTaken(cmd ?? "unrecognized configuration")
+                }
             }
             json["statusLine"] = [
                 "type": "command",
@@ -184,6 +205,9 @@ final class ClaudeIntegrationInstaller {
     // MARK: Leitura e escrita
 
     private func loadSettings(_ url: URL) throws -> [String: Any] {
+        // Arquivo ausente é primeira instalação legítima, não erro: seguimos com
+        // configuração vazia e o arquivo nasce na escrita.
+        guard FileManager.default.fileExists(atPath: url.path) else { return [:] }
         guard let data = try? Data(contentsOf: url) else {
             throw ClaudeInstallError.unreadableSettings
         }
@@ -194,13 +218,24 @@ final class ClaudeIntegrationInstaller {
         return json
     }
 
-    /// Cópia de segurança antes, escrita atômica depois.
+    private func backupURL(besides url: URL) -> URL {
+        let f = DateFormatter()
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.dateFormat = "yyyy-MM-dd'T'HH-mm-ss.SSS"
+        return url.deletingLastPathComponent()
+            .appendingPathComponent("settings.json.claude-notch-backup-\(f.string(from: Date()))")
+    }
+
+    /// Backup ANTES de escrever, e com falha visível: sem rede de segurança
+    /// confirmada, não mexemos no arquivo de que o usuário depende para trabalhar.
     private func writeSettings(_ json: [String: Any], to url: URL) throws {
-        let stamp = ISO8601DateFormatter().string(from: .now).replacingOccurrences(of: ":", with: "-")
-        let backup = url.deletingLastPathComponent()
-            .appendingPathComponent("settings.json.claude-notch-backup-\(stamp)")
-        if let current = try? Data(contentsOf: url) {
-            try? current.write(to: backup)
+        if FileManager.default.fileExists(atPath: url.path) {
+            do {
+                let current = try Data(contentsOf: url)
+                try current.write(to: backupURL(besides: url))
+            } catch {
+                throw ClaudeInstallError.backupFailed(error.localizedDescription)
+            }
         }
         let out = try JSONSerialization.data(
             withJSONObject: json,

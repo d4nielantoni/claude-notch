@@ -86,6 +86,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         cleanupDragDetectors()
         cleanupWindows()
         XPCHelperClient.shared.stopMonitoringAccessibilityAuthorization()
+
+        // Derruba o ouvinte e remove o arquivo de soquete.
+        ClaudeManager.shared.stop()
     }
 
     @MainActor
@@ -436,6 +439,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         previousScreens = NSScreen.screens
+
+        // O ouvinte do soquete só sobe se o usuário já autorizou a integração.
+        // Sem isso o app abriria um soquete que ninguém pediu.
+        if Defaults[.claudeIntegrationEnabled] {
+            ClaudeManager.shared.start()
+        }
     }
 
     func playWelcomeSound() {
