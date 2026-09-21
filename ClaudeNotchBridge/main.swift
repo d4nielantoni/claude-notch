@@ -18,7 +18,7 @@ ClaudeBridgeClient.send(
     ClaudeBridgeEnvelope(
         kind: kind,
         sentAt: Int64(Date().timeIntervalSince1970 * 1000),
-        payload: String(data: input, encoding: .utf8) ?? ""
+        payload: String(decoding: input, as: UTF8.self)
     )
 )
 

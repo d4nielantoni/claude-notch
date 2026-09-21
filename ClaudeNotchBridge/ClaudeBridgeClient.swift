@@ -17,9 +17,14 @@ enum ClaudeBridgeClient {
         guard fd >= 0 else { return }
         defer { close(fd) }
 
+        // Sem isto, um write() numa conexão que o app já fechou mata este
+        // processo com SIGPIPE (saída 141) — e a ponte jamais pode falhar
+        // de um jeito que o Claude Code perceba.
+        var noSigPipe: Int32 = 1
+        setsockopt(fd, SOL_SOCKET, SO_NOSIGPIPE, &noSigPipe, socklen_t(MemoryLayout<Int32>.size))
+
         var tv = timeval(tv_sec: 0, tv_usec: timeoutMicroseconds)
         setsockopt(fd, SOL_SOCKET, SO_SNDTIMEO, &tv, socklen_t(MemoryLayout<timeval>.size))
-        setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &tv, socklen_t(MemoryLayout<timeval>.size))
 
         let path = ClaudeBridgePaths.socketPath(sandboxed: false)
 

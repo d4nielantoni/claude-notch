@@ -29,6 +29,20 @@ public struct ClaudeBridgeEnvelope: Codable {
         self.sentAt = sentAt
         self.payload = payload
     }
+
+    private enum CodingKeys: String, CodingKey {
+        case v, kind, sentAt, payload
+    }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        // Ausência de "v" significa versão 1: o envelope precisa sobreviver a
+        // um remetente mais antigo, não recusá-lo.
+        v = try c.decodeIfPresent(Int.self, forKey: .v) ?? 1
+        kind = try c.decode(ClaudeBridgeKind.self, forKey: .kind)
+        sentAt = try c.decode(Int64.self, forKey: .sentAt)
+        payload = try c.decode(String.self, forKey: .payload)
+    }
 }
 
 /// Campos que interessam de um gancho. Todos opcionais de propósito:
