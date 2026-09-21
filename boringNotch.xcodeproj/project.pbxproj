@@ -106,10 +106,15 @@
 		14E9FEAA2C70BF610062E83F /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEA92C70BF610062E83F /* DownloadView.swift */; };
 		14E9FEAE2C7325770062E83F /* Button+Bouncing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */; };
 		14FC6E502C7DED5600C7BEA5 /* DataTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FC6E4F2C7DED5600C7BEA5 /* DataTypes+Extensions.swift */; };
+		44D1FF0FCEC5352972D318BB /* ClaudeNotchBridge in Embed Claude Notch Bridge */ = {isa = PBXBuildFile; fileRef = C7B912DAB6F6DC524AE49D25 /* ClaudeNotchBridge */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4E4E89F9DD75D27B5A4092C9 /* ClaudeBridgeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81F7A66FDD2E50343C3917A /* ClaudeBridgeClient.swift */; };
 		507266DB2C908E2E00A2D00D /* HoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507266DA2C908E2E00A2D00D /* HoverButton.swift */; };
 		5917FD112E57891600E87F1C /* MediaKeyInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5917FD102E57891600E87F1C /* MediaKeyInterceptor.swift */; };
 		5955950D2E900ED800C66711 /* ApplicationRelauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5955950C2E900ED800C66711 /* ApplicationRelauncher.swift */; };
 		59D8C23C2E589FAA00147B33 /* VolumeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D8C23B2E589FAA00147B33 /* VolumeManager.swift */; };
+		5F20C242C5AEE645AB2C1E05 /* ClaudeStatusLineFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5789C5BA39D8EE523D00A755 /* ClaudeStatusLineFormatter.swift */; };
+		71DE676E5250D96710662271 /* ClaudeBridgeContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DA22738CD3AE486241C116 /* ClaudeBridgeContract.swift */; };
+		79F761C108BFDDB3304FCBB7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D3C20B61EEF1FCCEB6EA85 /* main.swift */; };
 		9A0887322C7A693000C160EA /* TabButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0887312C7A693000C160EA /* TabButton.swift */; };
 		9A0887352C7AFF8E00C160EA /* TabSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0887342C7AFF8E00C160EA /* TabSelectionView.swift */; };
 		9A987A0D2C73CA66005CA465 /* ShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A987A032C73CA66005CA465 /* ShelfView.swift */; };
@@ -142,6 +147,8 @@
 		B1F0A0022E60000100000001 /* BrightnessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F0A0012E60000100000001 /* BrightnessManager.swift */; };
 		B1F747F92EC7E94000F841DB /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F747F82EC7E94000F841DB /* LottieView.swift */; };
 		B1FEB4992C7686630066EBBC /* PanGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FEB4982C7686630066EBBC /* PanGesture.swift */; };
+		BC1C3BC3D527E74ABF0A45C9 /* ClaudeBridgeContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DA22738CD3AE486241C116 /* ClaudeBridgeContract.swift */; };
+		CDD4D6ACA2C54A9555071A92 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9831F575CA17DFE9C3D4D6 /* Cocoa.framework */; };
 		F38DE6482D8243E7008B5C6D /* BatteryActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38DE6472D8243E2008B5C6D /* BatteryActivityManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -152,6 +159,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 11F7484E2EC9AABA00F841DB;
 			remoteInfo = BoringNotchXPCHelper;
+		};
+		CC8993DBAEA55E195BB08269 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 14CEF40A2C5CAED200855D72 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F9B0D7449FB428447ECE24EB;
+			remoteInfo = ClaudeNotchBridge;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -165,6 +179,17 @@
 				11F7485B2EC9AABA00F841DB /* BoringNotchXPCHelper.xpc in Embed XPC Services */,
 			);
 			name = "Embed XPC Services";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B0C6CCF9B2F9923A69A875ED /* Embed Claude Notch Bridge */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Helpers;
+			dstSubfolderSpec = 1;
+			files = (
+				44D1FF0FCEC5352972D318BB /* ClaudeNotchBridge in Embed Claude Notch Bridge */,
+			);
+			name = "Embed Claude Notch Bridge";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		B1ECFA062C6FE58A002ACD87 /* Embed Frameworks */ = {
@@ -181,6 +206,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		09DA22738CD3AE486241C116 /* ClaudeBridgeContract.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeBridgeContract.swift; path = Claude/ClaudeBridgeContract.swift; sourceTree = "<group>"; };
 		1100290B2E847E2800035A57 /* NSItemProvider+LoadHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSItemProvider+LoadHelpers.swift"; sourceTree = "<group>"; };
 		110029262E84FD4C00035A57 /* TemporaryFileStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryFileStorageService.swift; sourceTree = "<group>"; };
 		110029292E8691B400035A57 /* FileShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileShareView.swift; sourceTree = "<group>"; };
@@ -276,7 +302,9 @@
 		14E9FEA92C70BF610062E83F /* DownloadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadView.swift; sourceTree = "<group>"; };
 		14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+Bouncing.swift"; sourceTree = "<group>"; };
 		14FC6E4F2C7DED5600C7BEA5 /* DataTypes+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataTypes+Extensions.swift"; sourceTree = "<group>"; };
+		40D3C20B61EEF1FCCEB6EA85 /* main.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = main.swift; path = ClaudeNotchBridge/main.swift; sourceTree = "<group>"; };
 		507266DA2C908E2E00A2D00D /* HoverButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverButton.swift; sourceTree = "<group>"; };
+		5789C5BA39D8EE523D00A755 /* ClaudeStatusLineFormatter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeStatusLineFormatter.swift; path = ClaudeNotchBridge/ClaudeStatusLineFormatter.swift; sourceTree = "<group>"; };
 		5917FD102E57891600E87F1C /* MediaKeyInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaKeyInterceptor.swift; sourceTree = "<group>"; };
 		5955950C2E900ED800C66711 /* ApplicationRelauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationRelauncher.swift; sourceTree = "<group>"; };
 		59D8C23B2E589FAA00147B33 /* VolumeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeManager.swift; sourceTree = "<group>"; };
@@ -308,11 +336,14 @@
 		B1F0A0012E60000100000001 /* BrightnessManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrightnessManager.swift; sourceTree = "<group>"; };
 		B1F747F82EC7E94000F841DB /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		B1FEB4982C7686630066EBBC /* PanGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanGesture.swift; sourceTree = "<group>"; };
+		B81F7A66FDD2E50343C3917A /* ClaudeBridgeClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeBridgeClient.swift; path = ClaudeNotchBridge/ClaudeBridgeClient.swift; sourceTree = "<group>"; };
+		C7B912DAB6F6DC524AE49D25 /* ClaudeNotchBridge */ = {isa = PBXFileReference; includeInIndex = 0; path = ClaudeNotchBridge; sourceTree = BUILT_PRODUCTS_DIR; };
 		F38DE6472D8243E2008B5C6D /* BatteryActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryActivityManager.swift; sourceTree = "<group>"; };
+		FA9831F575CA17DFE9C3D4D6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.0.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		11F7485C2EC9AABA00F841DB /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		11F7485C2EC9AABA00F841DB /* Exceptions for "BoringNotchXPCHelper" folder in "BoringNotchXPCHelper" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -322,8 +353,29 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		112FB72F2CCF12CC0015238C /* private */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = private; sourceTree = "<group>"; };
-		11F748502EC9AABA00F841DB /* BoringNotchXPCHelper */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (11F7485C2EC9AABA00F841DB /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = BoringNotchXPCHelper; sourceTree = "<group>"; };
+		112FB72F2CCF12CC0015238C /* private */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = private;
+			sourceTree = "<group>";
+		};
+		11F748502EC9AABA00F841DB /* BoringNotchXPCHelper */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				11F7485C2EC9AABA00F841DB /* Exceptions for "BoringNotchXPCHelper" folder in "BoringNotchXPCHelper" target */,
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = BoringNotchXPCHelper;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -351,6 +403,14 @@
 				B19016222CC15B3D00E3F12E /* Defaults in Frameworks */,
 				111BE95D2ECD71E10079DD4E /* AsyncXPCConnection in Frameworks */,
 				B1628B922CC260C0003D8DF3 /* SwiftUIIntrospect in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CBF20464287415560BB07E79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDD4D6ACA2C54A9555071A92 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,6 +606,7 @@
 				11F748502EC9AABA00F841DB /* BoringNotchXPCHelper */,
 				14CEF4132C5CAED300855D72 /* Products */,
 				14D031EC2C689DB70096E6A1 /* Frameworks */,
+				95C0A46F0BB4DF70CF8B0527 /* ClaudeNotchBridge */,
 			);
 			sourceTree = "<group>";
 		};
@@ -554,6 +615,7 @@
 			children = (
 				14CEF4122C5CAED300855D72 /* boringNotch.app */,
 				11F7484F2EC9AABA00F841DB /* BoringNotchXPCHelper.xpc */,
+				C7B912DAB6F6DC524AE49D25 /* ClaudeNotchBridge */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -584,6 +646,7 @@
 				14CEF41B2C5CAED400855D72 /* Preview Content */,
 				112FB72F2CCF12CC0015238C /* private */,
 				11CC44A12CEE614100C7244B /* BoringViewCoordinator.swift */,
+				78E19C556C00B9A1D2CF15E2 /* Claude */,
 			);
 			path = boringNotch;
 			sourceTree = "<group>";
@@ -602,6 +665,7 @@
 				14D031EF2C689DC00096E6A1 /* ApplicationServices.framework */,
 				14D031ED2C689DB70096E6A1 /* IOKit.framework */,
 				112B0EBA2E30DD5000562D6C /* MediaRemoteAdapter.framework */,
+				CEE7B471BE29B27D1251F2FE /* OS X */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -636,6 +700,24 @@
 				1153BD902D986DB300979FB0 /* PlaybackState.swift */,
 			);
 			path = models;
+			sourceTree = "<group>";
+		};
+		78E19C556C00B9A1D2CF15E2 /* Claude */ = {
+			isa = PBXGroup;
+			children = (
+				09DA22738CD3AE486241C116 /* ClaudeBridgeContract.swift */,
+			);
+			name = Claude;
+			sourceTree = "<group>";
+		};
+		95C0A46F0BB4DF70CF8B0527 /* ClaudeNotchBridge */ = {
+			isa = PBXGroup;
+			children = (
+				B81F7A66FDD2E50343C3917A /* ClaudeBridgeClient.swift */,
+				5789C5BA39D8EE523D00A755 /* ClaudeStatusLineFormatter.swift */,
+				40D3C20B61EEF1FCCEB6EA85 /* main.swift */,
+			);
+			name = ClaudeNotchBridge;
 			sourceTree = "<group>";
 		};
 		9A0887332C7AFF7E00C160EA /* Tabs */ = {
@@ -757,6 +839,14 @@
 			path = Tips;
 			sourceTree = "<group>";
 		};
+		CEE7B471BE29B27D1251F2FE /* OS X */ = {
+			isa = PBXGroup;
+			children = (
+				FA9831F575CA17DFE9C3D4D6 /* Cocoa.framework */,
+			);
+			name = "OS X";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -776,8 +866,6 @@
 				11F748502EC9AABA00F841DB /* BoringNotchXPCHelper */,
 			);
 			name = BoringNotchXPCHelper;
-			packageProductDependencies = (
-			);
 			productName = BoringNotchXPCHelper;
 			productReference = 11F7484F2EC9AABA00F841DB /* BoringNotchXPCHelper.xpc */;
 			productType = "com.apple.product-type.xpc-service";
@@ -791,11 +879,13 @@
 				14CEF4102C5CAED300855D72 /* Resources */,
 				B1ECFA062C6FE58A002ACD87 /* Embed Frameworks */,
 				11F748412EC8051E00F841DB /* Embed XPC Services */,
+				B0C6CCF9B2F9923A69A875ED /* Embed Claude Notch Bridge */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				11F7485A2EC9AABA00F841DB /* PBXTargetDependency */,
+				5852FDC193C4E5808A5A4DF0 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				112FB72F2CCF12CC0015238C /* private */,
@@ -818,6 +908,22 @@
 			productName = dynamicNotch;
 			productReference = 14CEF4122C5CAED300855D72 /* boringNotch.app */;
 			productType = "com.apple.product-type.application";
+		};
+		F9B0D7449FB428447ECE24EB /* ClaudeNotchBridge */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5EAE07F3058F26B95481CD26 /* Build configuration list for PBXNativeTarget "ClaudeNotchBridge" */;
+			buildPhases = (
+				9383314BBD434C3A3C8D679E /* Sources */,
+				CBF20464287415560BB07E79 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ClaudeNotchBridge;
+			productName = ClaudeNotchBridge;
+			productReference = C7B912DAB6F6DC524AE49D25 /* ClaudeNotchBridge */;
+			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
@@ -866,6 +972,7 @@
 			targets = (
 				14CEF4112C5CAED300855D72 /* boringNotch */,
 				11F7484E2EC9AABA00F841DB /* BoringNotchXPCHelper */,
+				F9B0D7449FB428447ECE24EB /* ClaudeNotchBridge */,
 			);
 		};
 /* End PBXProject section */
@@ -1020,6 +1127,18 @@
 				1100290C2E847E2800035A57 /* NSItemProvider+LoadHelpers.swift in Sources */,
 				11CFC6632E09918400748C80 /* MusicControllerSelectionView.swift in Sources */,
 				B1F0A0022E60000100000001 /* BrightnessManager.swift in Sources */,
+				71DE676E5250D96710662271 /* ClaudeBridgeContract.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9383314BBD434C3A3C8D679E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E4E89F9DD75D27B5A4092C9 /* ClaudeBridgeClient.swift in Sources */,
+				5F20C242C5AEE645AB2C1E05 /* ClaudeStatusLineFormatter.swift in Sources */,
+				79F761C108BFDDB3304FCBB7 /* main.swift in Sources */,
+				BC1C3BC3D527E74ABF0A45C9 /* ClaudeBridgeContract.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1031,9 +1150,28 @@
 			target = 11F7484E2EC9AABA00F841DB /* BoringNotchXPCHelper */;
 			targetProxy = 11F748592EC9AABA00F841DB /* PBXContainerItemProxy */;
 		};
+		5852FDC193C4E5808A5A4DF0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ClaudeNotchBridge;
+			target = F9B0D7449FB428447ECE24EB /* ClaudeNotchBridge */;
+			targetProxy = CC8993DBAEA55E195BB08269 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		0E544D56FB0B183CECF0EEC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_APP_SANDBOX = NO;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_NAME = "claude-notch-bridge";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		11F7485E2EC9AABA00F841DB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1315,6 +1453,19 @@
 			};
 			name = Release;
 		};
+		A7BFE443B110B85A600943DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				ENABLE_APP_SANDBOX = NO;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_NAME = "claude-notch-bridge";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1341,6 +1492,15 @@
 			buildConfigurations = (
 				14CEF4222C5CAED400855D72 /* Debug */,
 				14CEF4232C5CAED400855D72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5EAE07F3058F26B95481CD26 /* Build configuration list for PBXNativeTarget "ClaudeNotchBridge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0E544D56FB0B183CECF0EEC7 /* Release */,
+				A7BFE443B110B85A600943DB /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
