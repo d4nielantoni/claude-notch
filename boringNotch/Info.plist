@@ -11,8 +11,18 @@
 	<true/>
 	<key>SUEnableInstallerLauncherService</key>
 	<true/>
+	<!-- Este fork NAO pode se auto-atualizar a partir do projeto original:
+	     o instalador do upstream sobrescreveria o app inteiro e levaria junto
+	     o modulo do Claude, sem aviso. O endereco aponta para o espaco do
+	     proprio fork (hoje inexistente, o que e proposital: falha inofensiva
+	     em vez de substituicao silenciosa) e a checagem automatica fica
+	     desligada. Atualizar este app = git pull + rebuild. -->
 	<key>SUFeedURL</key>
-	<string>https://TheBoredTeam.github.io/boring.notch/appcast.xml</string>
+	<string>https://d4nielantoni.github.io/claude-notch/appcast.xml</string>
+	<key>SUEnableAutomaticChecks</key>
+	<false/>
+	<key>SUAutomaticallyUpdate</key>
+	<false/>
 	<key>SUPublicEDKey</key>
 	<string>B1Y47t8C/v8ImurYA+9arEsuCrpxwJSviekiflMElbI=</string>
 	<key>UTImportedTypeDeclarations</key>
