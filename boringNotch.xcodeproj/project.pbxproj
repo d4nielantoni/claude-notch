@@ -153,6 +153,7 @@
 		BC1C3BC3D527E74ABF0A45C9 /* ClaudeBridgeContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DA22738CD3AE486241C116 /* ClaudeBridgeContract.swift */; };
 		CD5A5D2B2D26952BB945AB4E /* ClaudeNotchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F4006D8B3810E3151C4A4C /* ClaudeNotchView.swift */; };
 		CDD4D6ACA2C54A9555071A92 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9831F575CA17DFE9C3D4D6 /* Cocoa.framework */; };
+		D8B98067A970EF8D56EE532C /* ClaudeMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732B38FFDAEB82D79632A369 /* ClaudeMark.swift */; };
 		DBBF140C3364835D447B643E /* ClaudeBridgeServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734B2F0ED06F587232CEA18 /* ClaudeBridgeServer.swift */; };
 		DCD51F1E9B28F7B9C5BF97B8 /* ClaudeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECB4168B355FB2A73CDA9ED /* ClaudeManager.swift */; };
 		DDB652C5BBE15DC38A8439EA /* ClaudeCrab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAFC5B064FB4C7C38628F15 /* ClaudeCrab.swift */; };
@@ -319,6 +320,7 @@
 		5955950C2E900ED800C66711 /* ApplicationRelauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationRelauncher.swift; sourceTree = "<group>"; };
 		59D8C23B2E589FAA00147B33 /* VolumeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeManager.swift; sourceTree = "<group>"; };
 		59FDB314A153A2248C55B923 /* ClaudeSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClaudeSession.swift; sourceTree = "<group>"; };
+		732B38FFDAEB82D79632A369 /* ClaudeMark.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeMark.swift; path = Claude/ClaudeMark.swift; sourceTree = "<group>"; };
 		7734B2F0ED06F587232CEA18 /* ClaudeBridgeServer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeBridgeServer.swift; path = Claude/ClaudeBridgeServer.swift; sourceTree = "<group>"; };
 		79F4006D8B3810E3151C4A4C /* ClaudeNotchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeNotchView.swift; path = Claude/ClaudeNotchView.swift; sourceTree = "<group>"; };
 		7BAFC5B064FB4C7C38628F15 /* ClaudeCrab.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClaudeCrab.swift; sourceTree = "<group>"; };
@@ -742,6 +744,7 @@
 				79F4006D8B3810E3151C4A4C /* ClaudeNotchView.swift */,
 				E21D91B1FB106ACE587D9D0D /* ClaudeSessionRow.swift */,
 				E0BDA105EB2416AE49AA10F8 /* ClaudeSettingsView.swift */,
+				732B38FFDAEB82D79632A369 /* ClaudeMark.swift */,
 			);
 			name = Claude;
 			sourceTree = "<group>";
@@ -1176,6 +1179,7 @@
 				E08452B28DFA0CE9F4097CBE /* ClaudeLiveActivity.swift in Sources */,
 				0FE75DCC72F6ADC287B1BA21 /* ClaudeSettingsView.swift in Sources */,
 				DDB652C5BBE15DC38A8439EA /* ClaudeCrab.swift in Sources */,
+				D8B98067A970EF8D56EE532C /* ClaudeMark.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,7 +24,7 @@ var tabs: [TabModel] {
         lista.append(TabModel(label: "Shelf", icon: "tray.fill", view: .shelf))
     }
     if Defaults[.claudeIntegrationEnabled] {
-        lista.append(TabModel(label: "Claude", icon: "sparkles", view: .claude))
+        lista.append(TabModel(label: "Claude", icon: TabButton.claudeMarkIcon, view: .claude))
     }
     return lista
 }
