@@ -105,8 +105,17 @@ struct ClaudeLiveActivity: View {
 
             ring
         }
-        .padding(.horizontal, hasPhysicalNotch ? 8 : 7)
-        .frame(height: notchHeight, alignment: .center)
-        .fixedSize(horizontal: true, vertical: false)
+        .padding(.horizontal, hasPhysicalNotch ? 8 : 0)
+        // Com notch físico a caixa PRECISA crescer, para o conteúdo sobrar
+        // dos dois lados do recorte. Sem notch físico ela mantém a largura
+        // padrão e o conteúdo fica centralizado dentro: deixar o conteúdo
+        // ditar a largura faria a caixa encolher quando o Claude trabalha e
+        // voltar ao normal quando para — um pulo a cada evento.
+        .frame(
+            width: hasPhysicalNotch ? nil : notchWidth,
+            height: notchHeight,
+            alignment: .center
+        )
+        .fixedSize(horizontal: hasPhysicalNotch, vertical: false)
     }
 }

@@ -13,10 +13,14 @@ struct ClaudeSettings: View {
     @ObservedObject private var claude = ClaudeManager.shared
 
     @Default(.claudeIntegrationEnabled) private var enabled
+    @Default(.claudeSettingsBookmark) private var settingsBookmark
     @Default(.claudeStaleAfterMinutes) private var staleAfter
     @Default(.claudeRemoveAfterMinutes) private var removeAfter
     @Default(.claudeLimitWarningThreshold) private var warningThreshold
     @Default(.claudeLimitCriticalThreshold) private var criticalThreshold
+
+    /// Mesma regra do instalador: marca ligada E autorização presente.
+    private var installed: Bool { enabled && settingsBookmark != nil }
 
     @State private var busy = false
     @State private var errorMessage: String?
@@ -26,18 +30,18 @@ struct ClaudeSettings: View {
             Section {
                 HStack {
                     Circle()
-                        .fill(enabled ? Color.green : Color.gray)
+                        .fill(installed ? Color.green : Color.gray)
                         .frame(width: 8, height: 8)
-                    Text(enabled ? "Installed" : "Not installed")
+                    Text(installed ? "Installed" : "Not installed")
                     Spacer()
-                    if enabled {
+                    if installed {
                         Text("\(claude.sessions.count) live session(s)")
                             .foregroundStyle(.secondary)
                             .font(.caption)
                     }
                 }
 
-                if enabled {
+                if installed {
                     Button("Remove integration") {
                         run { try ClaudeIntegrationInstaller.shared.uninstall() }
                     }

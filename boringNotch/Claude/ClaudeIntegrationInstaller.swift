@@ -54,7 +54,13 @@ final class ClaudeIntegrationInstaller {
             .path
     }
 
-    var isInstalled: Bool { Defaults[.claudeIntegrationEnabled] }
+    /// Instalado de verdade exige as DUAS coisas. Só a marca ligada não basta:
+    /// sem a autorização da pasta o app não consegue tocar em nada, e dizer
+    /// "instalado" nesse estado é mentira que leva o usuário a clicar em
+    /// "remover" e tomar um erro.
+    var isInstalled: Bool {
+        Defaults[.claudeIntegrationEnabled] && Defaults[.claudeSettingsBookmark] != nil
+    }
 
     // MARK: Autorização
 
