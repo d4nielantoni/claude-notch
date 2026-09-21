@@ -103,6 +103,14 @@ class BoringViewModel: NSObject, ObservableObject {
     }
 
     // Computed property for effective notch height
+    /// A tela DESTA janela tem notch físico? Cada janela responde pela sua:
+    /// com `showOnAllDisplays` ligado o mesmo código desenha em telas
+    /// diferentes, e perguntar por uma tela global dá a resposta errada na
+    /// outra.
+    var hasPhysicalNotch: Bool {
+        (screenUUID.flatMap { NSScreen.screen(withUUID: $0) }?.safeAreaInsets.top ?? 0) > 0
+    }
+
     var effectiveClosedNotchHeight: CGFloat {
         let currentScreen = screenUUID.flatMap { NSScreen.screen(withUUID: $0) }
         let noNotchAndFullscreen = hideOnClosed && (currentScreen?.safeAreaInsets.top ?? 0 <= 0 || currentScreen == nil)

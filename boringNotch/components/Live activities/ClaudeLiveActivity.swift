@@ -23,7 +23,9 @@ struct ClaudeAsterisk: View {
     let working: Bool
     let size: CGFloat
 
-    private static let glyphs = ["·", "✢", "✳", "∗", "✻", "✽"]
+    // Os mesmos glifos da CLI do Claude Code, menos o "·" — num notch de
+    // ~26pt ele vira uma sujeirinha em vez de leitura de estado.
+    private static let glyphs = ["✢", "✳", "∗", "✻", "✽"]
     private let timer = Timer.publish(every: 0.15, on: .main, in: .common).autoconnect()
 
     @State private var phase = 0
@@ -47,10 +49,16 @@ struct ClaudeAsterisk: View {
 }
 
 struct ClaudeLiveActivity: View {
-    /// A altura vem de fora de propósito: quem manda no tamanho é o notch,
-    /// não esta view. Não existe parâmetro de largura — a view se mantém
-    /// estreita e cabe DENTRO da caixa, em vez de esticá-la.
+    /// Toda a geometria vem de fora: quem manda no tamanho é o notch.
     let notchHeight: CGFloat
+    /// Largura do recorte a evitar. Só importa quando o notch é físico.
+    let notchWidth: CGFloat
+    /// Numa tela com notch de verdade, o miolo é buraco na tela: desenhar ali
+    /// esconde o conteúdo. Aí o indicador se abre para os dois lados, como a
+    /// música faz. Numa tela sem notch, a caixa é desenhada e o miolo é
+    /// visível, então ficar compacto no centro é o certo — abrir seria só
+    /// inchar a caixa à toa.
+    let hasPhysicalNotch: Bool
 
     @ObservedObject var claude = ClaudeManager.shared
 
@@ -69,30 +77,36 @@ struct ClaudeLiveActivity: View {
     }
 
     /// Lado do conteúdo: sempre menor que a altura do notch, nunca o contrário.
-    private var side: CGFloat { max(0, notchHeight - 12) }
+    private var side: CGFloat { max(12, notchHeight - 10) }
+
+    private var ring: some View {
+        ZStack {
+            Circle()
+                .stroke(Color.white.opacity(0.15), lineWidth: 2)
+            Circle()
+                .trim(from: 0, to: ringValue)
+                .stroke(ringTint, style: StrokeStyle(lineWidth: 2, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+                .animation(.smooth, value: ringValue)
+        }
+        .frame(width: side * 0.78, height: side * 0.78)
+        .opacity(claude.limits.fiveHourPercentage == nil ? 0.35 : 1)
+    }
 
     var body: some View {
-        // Compacto de propósito: nada de Spacer largo aqui. Um espaçador do
-        // tamanho do notch empurraria a caixa para além dela mesma, que foi
-        // exatamente o defeito relatado ("o notch ficou gigante").
-        HStack(spacing: 5) {
-            ClaudeAsterisk(working: working, size: max(7, side * 0.60))
+        HStack(spacing: hasPhysicalNotch ? 0 : 7) {
+            ClaudeAsterisk(working: working, size: max(11, side * 0.80))
+                .frame(width: side, height: side)
 
-            ZStack {
-                Circle()
-                    .stroke(Color.white.opacity(0.15), lineWidth: 2)
-                Circle()
-                    .trim(from: 0, to: ringValue)
-                    .stroke(ringTint, style: StrokeStyle(lineWidth: 2, lineCap: .round))
-                    .rotationEffect(.degrees(-90))
-                    .animation(.smooth, value: ringValue)
+            if hasPhysicalNotch {
+                // Reserva o recorte físico: o que cair aqui fica invisível.
+                Spacer(minLength: notchWidth)
             }
-            .frame(width: side * 0.62, height: side * 0.62)
-            .opacity(claude.limits.fiveHourPercentage == nil ? 0.35 : 1)
+
+            ring
         }
-        .padding(.horizontal, 6)
+        .padding(.horizontal, hasPhysicalNotch ? 8 : 7)
         .frame(height: notchHeight, alignment: .center)
-        // Teto rígido: por maior que fique o conteúdo, a caixa não cresce.
         .fixedSize(horizontal: true, vertical: false)
     }
 }

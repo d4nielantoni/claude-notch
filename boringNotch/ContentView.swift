@@ -293,8 +293,12 @@ struct ContentView: View {
                                   && Defaults[.showClaudeInClosedNotch]
                                   && claudeManager.needsUser {
                           // Só o que espera você passa na frente da música.
-                          ClaudeLiveActivity(notchHeight: vm.effectiveClosedNotchHeight)
-                              .frame(alignment: .center)
+                          ClaudeLiveActivity(
+                              notchHeight: vm.effectiveClosedNotchHeight,
+                              notchWidth: vm.closedNotchSize.width,
+                              hasPhysicalNotch: vm.hasPhysicalNotch
+                          )
+                          .frame(alignment: .center)
                       } else if (!coordinator.expandingView.show || coordinator.expandingView.type == .music) && vm.notchState == .closed && (musicManager.isPlaying || !musicManager.isPlayerIdle) && coordinator.musicLiveActivityEnabled && !vm.hideOnClosed {
                           MusicLiveActivity()
                               .frame(alignment: .center)
@@ -303,8 +307,12 @@ struct ContentView: View {
                                   && Defaults[.showClaudeInClosedNotch]
                                   && claudeManager.hasAttention {
                           // Trabalhando: aparece no lugar do rosto, nunca da música.
-                          ClaudeLiveActivity(notchHeight: vm.effectiveClosedNotchHeight)
-                              .frame(alignment: .center)
+                          ClaudeLiveActivity(
+                              notchHeight: vm.effectiveClosedNotchHeight,
+                              notchWidth: vm.closedNotchSize.width,
+                              hasPhysicalNotch: vm.hasPhysicalNotch
+                          )
+                          .frame(alignment: .center)
                       } else if !coordinator.expandingView.show && vm.notchState == .closed && (!musicManager.isPlaying && musicManager.isPlayerIdle) && Defaults[.showNotHumanFace] && !vm.hideOnClosed  {
                           BoringFaceAnimation()
                        } else if vm.notchState == .open {
