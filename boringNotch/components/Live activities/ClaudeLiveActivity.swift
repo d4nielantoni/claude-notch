@@ -94,18 +94,19 @@ struct ClaudeLiveActivity: View {
     }
 
     var body: some View {
-        HStack(spacing: hasPhysicalNotch ? 0 : 7) {
+        HStack(spacing: 0) {
             ClaudeAsterisk(working: working, size: max(11, side * 0.80))
                 .frame(width: side, height: side)
 
-            if hasPhysicalNotch {
-                // Reserva o recorte físico: o que cair aqui fica invisível.
-                Spacer(minLength: notchWidth)
-            }
+            // Com notch físico, o espaçador reserva o recorte — o que cair
+            // ali fica invisível. Sem notch físico ele é só elástico, e
+            // empurra os dois elementos para as pontas da caixa, que é o
+            // mesmo arranjo visual, sem precisar esticar nada.
+            Spacer(minLength: hasPhysicalNotch ? notchWidth : 0)
 
             ring
         }
-        .padding(.horizontal, hasPhysicalNotch ? 8 : 0)
+        .padding(.horizontal, 8)
         // Com notch físico a caixa PRECISA crescer, para o conteúdo sobrar
         // dos dois lados do recorte. Sem notch físico ela mantém a largura
         // padrão e o conteúdo fica centralizado dentro: deixar o conteúdo
