@@ -5,6 +5,7 @@
 //  Created by Hugo Persson on 2024-08-25.
 //
 
+import Defaults
 import SwiftUI
 
 struct TabModel: Identifiable {
@@ -14,11 +15,19 @@ struct TabModel: Identifiable {
     let view: NotchViews
 }
 
-let tabs = [
-    TabModel(label: "Home", icon: "house.fill", view: .home),
-    TabModel(label: "Shelf", icon: "tray.fill", view: .shelf),
-    TabModel(label: "Claude", icon: "sparkles", view: .claude)
-]
+/// Só entra na barra a aba de um recurso que está ligado. Sem isto, a aba
+/// "Claude" apareceria para quem nunca pediu a integração, e a "Shelf"
+/// ressuscitaria para quem desligou a prateleira.
+var tabs: [TabModel] {
+    var lista = [TabModel(label: "Home", icon: "house.fill", view: .home)]
+    if Defaults[.boringShelf] {
+        lista.append(TabModel(label: "Shelf", icon: "tray.fill", view: .shelf))
+    }
+    if Defaults[.claudeIntegrationEnabled] {
+        lista.append(TabModel(label: "Claude", icon: "sparkles", view: .claude))
+    }
+    return lista
+}
 
 struct TabSelectionView: View {
     @ObservedObject var coordinator = BoringViewCoordinator.shared

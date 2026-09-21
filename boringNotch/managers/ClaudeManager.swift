@@ -49,6 +49,11 @@ final class ClaudeManager: ObservableObject {
         sessions.contains { $0.state.demandsAttention }
     }
 
+    /// Alguma sessão parada esperando você. É o único caso que interrompe a música.
+    var needsUser: Bool {
+        sessions.contains { $0.state.needsUser }
+    }
+
     // MARK: Entrada
 
     private func handle(_ envelope: ClaudeBridgeEnvelope) {

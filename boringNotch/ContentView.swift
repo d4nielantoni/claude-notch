@@ -291,11 +291,19 @@ struct ContentView: View {
                       } else if vm.notchState == .closed && !vm.hideOnClosed
                                   && Defaults[.claudeIntegrationEnabled]
                                   && Defaults[.showClaudeInClosedNotch]
-                                  && claudeManager.hasAttention {
-                          ClaudeLiveActivity()
+                                  && claudeManager.needsUser {
+                          // Só o que espera você passa na frente da música.
+                          ClaudeLiveActivity(notchHeight: vm.effectiveClosedNotchHeight)
                               .frame(alignment: .center)
                       } else if (!coordinator.expandingView.show || coordinator.expandingView.type == .music) && vm.notchState == .closed && (musicManager.isPlaying || !musicManager.isPlayerIdle) && coordinator.musicLiveActivityEnabled && !vm.hideOnClosed {
                           MusicLiveActivity()
+                              .frame(alignment: .center)
+                      } else if vm.notchState == .closed && !vm.hideOnClosed
+                                  && Defaults[.claudeIntegrationEnabled]
+                                  && Defaults[.showClaudeInClosedNotch]
+                                  && claudeManager.hasAttention {
+                          // Trabalhando: aparece no lugar do rosto, nunca da música.
+                          ClaudeLiveActivity(notchHeight: vm.effectiveClosedNotchHeight)
                               .frame(alignment: .center)
                       } else if !coordinator.expandingView.show && vm.notchState == .closed && (!musicManager.isPlaying && musicManager.isPlayerIdle) && Defaults[.showNotHumanFace] && !vm.hideOnClosed  {
                           BoringFaceAnimation()

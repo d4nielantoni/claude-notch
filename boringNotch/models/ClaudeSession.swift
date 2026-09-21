@@ -37,6 +37,13 @@ enum ClaudeSessionState: String {
     var demandsAttention: Bool {
         self == .working || self == .waiting || self == .error
     }
+
+    /// Estados em que o Claude está esperando VOCÊ. Bem mais estreito que
+    /// `demandsAttention`: só estes justificam tomar o notch da música, porque
+    /// "trabalhando" é o estado comum e tomaria a música quase o tempo todo.
+    var needsUser: Bool {
+        self == .waiting || self == .error
+    }
 }
 
 struct ClaudeSession: Identifiable, Equatable {
