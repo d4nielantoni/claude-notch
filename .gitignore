@@ -53,3 +53,6 @@ build/
 *.xcarchive
 *.dSYM
 
+
+# Notas internas de design e planejamento: ficam locais, fora do repositório.
+docs/superpowers/

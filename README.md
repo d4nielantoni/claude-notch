@@ -39,9 +39,6 @@
 >   `MediaRemoteAdapter.framework` ships signed by another team and dyld refuses to load a
 >   framework whose Team ID differs from the process.
 >
-> Design notes and the implementation plan live in [`docs/superpowers/`](docs/superpowers/)
-> (written in Portuguese).
->
 > License: **GPL-3.0**, inherited from upstream. All credit for the app below goes to
 > [TheBoredTeam](https://github.com/TheBoredTeam/boring.notch).
 
