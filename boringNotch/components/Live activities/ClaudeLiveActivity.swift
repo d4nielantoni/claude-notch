@@ -6,7 +6,6 @@
 //  anel com o consumo do limite de 5 horas.
 //
 
-import Defaults
 import SwiftUI
 
 /// Laranja da marca do Claude, o mesmo do asterisco no terminal.
@@ -52,22 +51,22 @@ struct ClaudeLiveActivity: View {
     private var session: ClaudeSession? { claude.highlighted }
     private var working: Bool { session?.state == .working }
 
-    private var ringValue: Double {
-        min(max(claude.limits.fiveHourPercentage ?? 0, 0), 100) / 100
-    }
-
-    private var ringTint: Color {
-        guard let p = claude.limits.fiveHourPercentage else { return .gray }
-        if p >= Defaults[.claudeLimitCriticalThreshold] { return .red }
-        if p >= Defaults[.claudeLimitWarningThreshold] { return .orange }
-        return .green
-    }
 
     /// Lado do conteúdo: sempre menor que a altura do notch, nunca o contrário.
     private var side: CGFloat { max(12, notchHeight - 10) }
 
+    /// Com relógio próprio: sem ele, o anel ficava no número da janela velha
+    /// depois do reset até chegar algum evento.
     private var ring: some View {
-        ZStack {
+        TimelineView(.periodic(from: .now, by: 60)) { context in
+            ring(percentage: claude.limits.fiveHour?.displayedPercentage(now: context.date))
+        }
+    }
+
+    private func ring(percentage: Double?) -> some View {
+        let ringValue = (percentage ?? 0) / 100
+        let ringTint = ClaudeLimitWindow.tint(for: percentage)
+        return ZStack {
             Circle()
                 .stroke(Color.white.opacity(0.15), lineWidth: 2)
             Circle()
@@ -77,7 +76,7 @@ struct ClaudeLiveActivity: View {
                 .animation(.smooth, value: ringValue)
         }
         .frame(width: side * 0.78, height: side * 0.78)
-        .opacity(claude.limits.fiveHourPercentage == nil ? 0.35 : 1)
+        .opacity(percentage == nil ? 0.35 : 1)
     }
 
     var body: some View {

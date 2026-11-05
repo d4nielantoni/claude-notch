@@ -12,16 +12,8 @@ struct ClaudeNotchView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 14) {
             VStack(alignment: .leading, spacing: 10) {
-                ClaudeLimitGauge(
-                    title: "5-hour limit",
-                    percentage: claude.limits.fiveHourPercentage,
-                    resetsAt: claude.limits.fiveHourResetsAt
-                )
-                ClaudeLimitGauge(
-                    title: "7-day limit",
-                    percentage: claude.limits.sevenDayPercentage,
-                    resetsAt: claude.limits.sevenDayResetsAt
-                )
+                ClaudeLimitGauge(title: "5-hour limit", window: claude.limits.fiveHour)
+                ClaudeLimitGauge(title: "7-day limit", window: claude.limits.sevenDay)
             }
             .frame(maxWidth: .infinity)
 

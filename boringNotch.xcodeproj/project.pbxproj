@@ -108,6 +108,7 @@
 		14E9FEAA2C70BF610062E83F /* DownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEA92C70BF610062E83F /* DownloadView.swift */; };
 		14E9FEAE2C7325770062E83F /* Button+Bouncing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E9FEAD2C7325770062E83F /* Button+Bouncing.swift */; };
 		14FC6E502C7DED5600C7BEA5 /* DataTypes+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FC6E4F2C7DED5600C7BEA5 /* DataTypes+Extensions.swift */; };
+		172F11DD5B4BE5C0F743F834 /* ClaudeTerminalFocuser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A4F5271C2EDFAD5FCB5B08 /* ClaudeTerminalFocuser.swift */; };
 		44D1FF0FCEC5352972D318BB /* ClaudeNotchBridge in Embed Claude Notch Bridge */ = {isa = PBXBuildFile; fileRef = C7B912DAB6F6DC524AE49D25 /* ClaudeNotchBridge */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		4E4E89F9DD75D27B5A4092C9 /* ClaudeBridgeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81F7A66FDD2E50343C3917A /* ClaudeBridgeClient.swift */; };
 		507266DB2C908E2E00A2D00D /* HoverButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507266DA2C908E2E00A2D00D /* HoverButton.swift */; };
@@ -153,6 +154,7 @@
 		BC1C3BC3D527E74ABF0A45C9 /* ClaudeBridgeContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DA22738CD3AE486241C116 /* ClaudeBridgeContract.swift */; };
 		CD5A5D2B2D26952BB945AB4E /* ClaudeNotchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F4006D8B3810E3151C4A4C /* ClaudeNotchView.swift */; };
 		CDD4D6ACA2C54A9555071A92 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9831F575CA17DFE9C3D4D6 /* Cocoa.framework */; };
+		D743AD964E1DA8D66D09CABA /* ClaudeTerminalProbe.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCE94A30FE3182FA8BD1EBA /* ClaudeTerminalProbe.swift */; };
 		D8B98067A970EF8D56EE532C /* ClaudeMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = 732B38FFDAEB82D79632A369 /* ClaudeMark.swift */; };
 		DBBF140C3364835D447B643E /* ClaudeBridgeServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734B2F0ED06F587232CEA18 /* ClaudeBridgeServer.swift */; };
 		DCD51F1E9B28F7B9C5BF97B8 /* ClaudeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECB4168B355FB2A73CDA9ED /* ClaudeManager.swift */; };
@@ -329,6 +331,7 @@
 		9A0887342C7AFF8E00C160EA /* TabSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSelectionView.swift; sourceTree = "<group>"; };
 		9A987A032C73CA66005CA465 /* ShelfView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShelfView.swift; sourceTree = "<group>"; };
 		9AB0C6BB2C73C9CB00F7CD30 /* NotchHomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotchHomeView.swift; sourceTree = "<group>"; };
+		AFCE94A30FE3182FA8BD1EBA /* ClaudeTerminalProbe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeTerminalProbe.swift; path = ClaudeNotchBridge/ClaudeTerminalProbe.swift; sourceTree = "<group>"; };
 		B10348D82C74E56000475897 /* ConditionalModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionalModifier.swift; sourceTree = "<group>"; };
 		B10F84A22C6C9596009F3026 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		B141C2402CA5F53E00AC8CC8 /* SparkleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkleView.swift; sourceTree = "<group>"; };
@@ -357,6 +360,7 @@
 		BECB4168B355FB2A73CDA9ED /* ClaudeManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClaudeManager.swift; sourceTree = "<group>"; };
 		C68D8EF979332A02D5445377 /* ClaudeIntegrationInstaller.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeIntegrationInstaller.swift; path = Claude/ClaudeIntegrationInstaller.swift; sourceTree = "<group>"; };
 		C7B912DAB6F6DC524AE49D25 /* ClaudeNotchBridge */ = {isa = PBXFileReference; includeInIndex = 0; path = ClaudeNotchBridge; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3A4F5271C2EDFAD5FCB5B08 /* ClaudeTerminalFocuser.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeTerminalFocuser.swift; path = Claude/ClaudeTerminalFocuser.swift; sourceTree = "<group>"; };
 		E0BDA105EB2416AE49AA10F8 /* ClaudeSettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeSettingsView.swift; path = Claude/ClaudeSettingsView.swift; sourceTree = "<group>"; };
 		E21D91B1FB106ACE587D9D0D /* ClaudeSessionRow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ClaudeSessionRow.swift; path = Claude/ClaudeSessionRow.swift; sourceTree = "<group>"; };
 		F38DE6472D8243E2008B5C6D /* BatteryActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryActivityManager.swift; sourceTree = "<group>"; };
@@ -733,6 +737,7 @@
 				09DA22738CD3AE486241C116 /* ClaudeBridgeContract.swift */,
 				7734B2F0ED06F587232CEA18 /* ClaudeBridgeServer.swift */,
 				C68D8EF979332A02D5445377 /* ClaudeIntegrationInstaller.swift */,
+				D3A4F5271C2EDFAD5FCB5B08 /* ClaudeTerminalFocuser.swift */,
 			);
 			name = Claude;
 			sourceTree = "<group>";
@@ -755,6 +760,7 @@
 				B81F7A66FDD2E50343C3917A /* ClaudeBridgeClient.swift */,
 				5789C5BA39D8EE523D00A755 /* ClaudeStatusLineFormatter.swift */,
 				40D3C20B61EEF1FCCEB6EA85 /* main.swift */,
+				AFCE94A30FE3182FA8BD1EBA /* ClaudeTerminalProbe.swift */,
 			);
 			name = ClaudeNotchBridge;
 			sourceTree = "<group>";
@@ -1180,6 +1186,7 @@
 				0FE75DCC72F6ADC287B1BA21 /* ClaudeSettingsView.swift in Sources */,
 				DDB652C5BBE15DC38A8439EA /* ClaudeCrab.swift in Sources */,
 				D8B98067A970EF8D56EE532C /* ClaudeMark.swift in Sources */,
+				172F11DD5B4BE5C0F743F834 /* ClaudeTerminalFocuser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1191,6 +1198,7 @@
 				5F20C242C5AEE645AB2C1E05 /* ClaudeStatusLineFormatter.swift in Sources */,
 				79F761C108BFDDB3304FCBB7 /* main.swift in Sources */,
 				BC1C3BC3D527E74ABF0A45C9 /* ClaudeBridgeContract.swift in Sources */,
+				D743AD964E1DA8D66D09CABA /* ClaudeTerminalProbe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1428,7 +1436,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSBackgroundOnly = NO;
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSAppleEventsUsageDescription = "This app uses AppleEvents to control music";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "This app uses AppleEvents to control music and to bring you to the terminal tab running Claude Code";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "This app uses the calendar to display your calendar events";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to display a live camera view";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -1481,7 +1489,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSBackgroundOnly = NO;
 				INFOPLIST_KEY_LSUIElement = YES;
-				INFOPLIST_KEY_NSAppleEventsUsageDescription = "This app uses AppleEvents to control music";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "This app uses AppleEvents to control music and to bring you to the terminal tab running Claude Code";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "This app uses the calendar to display your calendar events";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera to display a live camera view";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";

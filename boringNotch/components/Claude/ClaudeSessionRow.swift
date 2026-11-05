@@ -8,6 +8,10 @@ import SwiftUI
 struct ClaudeSessionRow: View {
     let session: ClaudeSession
 
+    @State private var hovering = false
+
+    private var clickable: Bool { ClaudeTerminalFocuser.canFocus(session) }
+
     private var detail: String {
         if let tool = session.currentTool { return "using \(tool)" }
         if session.subagentCount > 0 { return "\(session.subagentCount) agents" }
@@ -15,6 +19,14 @@ struct ClaudeSessionRow: View {
     }
 
     var body: some View {
+        Button { ClaudeTerminalFocuser.focus(session) } label: { content }
+            // Sem .disabled: ele apagaria a linha inteira das sessões sem terminal.
+            .buttonStyle(.plain)
+            .onHover { hovering = clickable && $0 }
+            .help(clickable ? "Go to the terminal running this session" : "")
+    }
+
+    private var content: some View {
         HStack(spacing: 8) {
             Circle()
                 .fill(session.state.color)
@@ -55,5 +67,12 @@ struct ClaudeSessionRow: View {
             }
         }
         .padding(.vertical, 3)
+        .padding(.horizontal, 4)
+        .background(
+            RoundedRectangle(cornerRadius: 6)
+                .fill(Color.white.opacity(hovering ? 0.08 : 0))
+        )
+        // Sem isto só o texto recebe o clique; o espaço entre as colunas não.
+        .contentShape(Rectangle())
     }
 }

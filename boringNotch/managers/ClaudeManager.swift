@@ -26,7 +26,9 @@ final class ClaudeManager: ObservableObject {
         ClaudeBridgeServer.shared.start { [weak self] envelope in
             self?.handle(envelope)
         }
-        sweepTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
+        // Curto porque é ele que tira do notch a sessão cuja aba foi fechada.
+        // Custa uma consulta ao sistema por sessão.
+        sweepTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
             self?.sweepStaleSessions()
         }
     }
@@ -60,14 +62,14 @@ final class ClaudeManager: ObservableObject {
         guard let data = envelope.payload.data(using: .utf8) else { return }
         switch envelope.kind {
         case .hook:
-            applyHook(data)
+            applyHook(data, envelope: envelope)
         case .statusline:
-            applyStatusLine(data, sentAt: envelope.sentAt)
+            applyStatusLine(data, envelope: envelope)
         }
         publish()
     }
 
-    private func applyHook(_ data: Data) {
+    private func applyHook(_ data: Data, envelope: ClaudeBridgeEnvelope) {
         guard let p = try? ClaudeBridgeContract.decoder()
             .decode(ClaudeHookPayload.self, from: data),
               let id = p.sessionId, let event = p.hookEventName
@@ -78,9 +80,11 @@ final class ClaudeManager: ObservableObject {
             return
         }
 
-        var s = byID[id] ?? ClaudeSession(id: id)
+        guard var s = session(id, claudePid: envelope.claudePid) else { return }
         s.lastEventAt = .now
-        if let cwd = p.cwd { s.projectPath = cwd }
+        s.updateProjectPath(cwd: p.cwd, transcriptPath: p.transcriptPath)
+        s.adoptTerminal(envelope.terminal)
+        s.adoptProcess(envelope.claudePid)
 
         switch event {
         case "SessionStart":          s.state = .idle
@@ -100,34 +104,50 @@ final class ClaudeManager: ObservableObject {
         byID[id] = s
     }
 
-    private func applyStatusLine(_ data: Data, sentAt: Int64) {
+    private func applyStatusLine(_ data: Data, envelope: ClaudeBridgeEnvelope) {
         guard let p = try? ClaudeBridgeContract.decoder()
             .decode(ClaudeStatusLinePayload.self, from: data) else { return }
 
-        if let id = p.sessionId {
-            var s = byID[id] ?? ClaudeSession(id: id)
+        if let id = p.sessionId, var s = session(id, claudePid: envelope.claudePid) {
             s.lastEventAt = .now
-            if let cwd = p.cwd { s.projectPath = cwd }
+            s.updateProjectPath(cwd: p.cwd, transcriptPath: p.transcriptPath)
+            s.adoptTerminal(envelope.terminal)
+            s.adoptProcess(envelope.claudePid)
             s.modelName = p.model?.displayName
             s.contextPercentage = p.contextWindow?.usedPercentage
             s.costUSD = p.cost?.totalCostUsd
             byID[id] = s
         }
 
-        // Limites são da conta inteira. Um envelope atrasado nunca sobrescreve
-        // um número mais novo vindo de outra sessão.
-        guard sentAt >= limits.sourceSentAt, let r = p.rateLimits else { return }
+        // Limites são da conta inteira, e cada janela se resolve sozinha:
+        // uma sessão pode trazer o 5h fresco e o 7d de uma resposta antiga.
+        guard let r = p.rateLimits else { return }
         var l = limits
-        l.sourceSentAt = sentAt
-        if let f = r.fiveHour {
-            l.fiveHourPercentage = f.usedPercentage
-            l.fiveHourResetsAt = f.resetsAt.map { Date(timeIntervalSince1970: $0) }
-        }
-        if let w = r.sevenDay {
-            l.sevenDayPercentage = w.usedPercentage
-            l.sevenDayResetsAt = w.resetsAt.map { Date(timeIntervalSince1970: $0) }
-        }
+        l.fiveHour = Self.merge(l.fiveHour, r.fiveHour, sentAt: envelope.sentAt)
+        l.sevenDay = Self.merge(l.sevenDay, r.sevenDay, sentAt: envelope.sentAt)
         limits = l
+    }
+
+    private static func merge(
+        _ current: ClaudeLimitWindow?,
+        _ reading: ClaudeStatusLinePayload.RateWindow?,
+        sentAt: Int64
+    ) -> ClaudeLimitWindow? {
+        guard let pct = reading?.usedPercentage else { return current }
+        let incoming = ClaudeLimitWindow(
+            percentage: pct,
+            resetsAt: reading?.resetsAt.map { Date(timeIntervalSince1970: $0) },
+            sentAt: sentAt
+        )
+        return current?.merged(with: incoming) ?? incoming
+    }
+
+    /// A sessão que já existe, ou uma nova. Um envelope atrasado de um
+    /// processo que já morreu não ressuscita a sessão que a varredura tirou.
+    private func session(_ id: String, claudePid: Int32?) -> ClaudeSession? {
+        if let existing = byID[id] { return existing }
+        if let pid = claudePid, ClaudeProcessIdentity(pid: pid) == nil { return nil }
+        return ClaudeSession(id: id)
     }
 
     // MARK: Zumbis
@@ -135,15 +155,20 @@ final class ClaudeManager: ObservableObject {
     private func sweepStaleSessions() {
         let now = Date()
         let removeAfter = Double(Defaults[.claudeRemoveAfterMinutes]) * 60
-        let before = byID.count
-        byID = byID.filter { now.timeIntervalSince($0.value.lastEventAt) < removeAfter }
-        if byID.count != before { publish() }
+        byID = byID.filter { _, s in
+            // Aba fechada mata o Claude sem SessionEnd: o processo é a prova.
+            if let process = s.process, !process.isAlive { return false }
+            return now.timeIntervalSince(s.lastEventAt) < removeAfter
+        }
+        // Sempre: além das remoções, o tempo apaga sessões paradas (e esconde
+        // as de fundo) sem que chegue evento nenhum.
+        publish()
     }
 
     private func publish() {
         let now = Date()
         let staleAfter = Defaults[.claudeStaleAfterMinutes]
-        sessions = byID.values
+        let visible = byID.values
             .sorted { $0.lastEventAt > $1.lastEventAt }
             .map { s in
                 var s = s
@@ -153,5 +178,11 @@ final class ClaudeManager: ObservableObject {
                 }
                 return s
             }
+            // Sessão de fundo sobrevive à aba fechada e fica parada por horas.
+            // Só aparece trabalhando ou esperando você; segue registrada, e
+            // volta sozinha quando fizer algo.
+            .filter { !($0.terminal?.background == true && $0.state == .idle) }
+        // A varredura chama isto a cada 5 s; sem mudança, nada de redesenhar.
+        if visible != sessions { sessions = visible }
     }
 }
