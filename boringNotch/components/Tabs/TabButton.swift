@@ -12,7 +12,7 @@ struct TabButton: View {
     let icon: String
     let selected: Bool
     let onClick: () -> Void
-    
+
     /// Nome reservado: em vez de um símbolo do sistema, desenha a marca do
     /// Claude. Evita mudar a assinatura do botão e todos os pontos de chamada.
     static let claudeMarkIcon = "__claude_mark__"
@@ -35,6 +35,6 @@ struct TabButton: View {
 
 #Preview {
     TabButton(label: "Home", icon: "tray.fill", selected: true) {
-        print("Tapped")
+        Log.general.debug("Tapped")
     }
 }

@@ -8,10 +8,12 @@
 set -e
 cd "$(dirname "$0")/.."
 
-APP=/Applications/boringNotch.app
+APP="/Applications/Boring Notch.app"
+# Nome antigo do produto: o upstream passou a gerar "Boring Notch.app".
+LEGACY_APP=/Applications/boringNotch.app
 REL=$(xcodebuild -project boringNotch.xcodeproj -scheme boringNotch \
         -configuration Release -showBuildSettings 2>/dev/null \
-      | awk -F' = ' '/ BUILT_PRODUCTS_DIR /{print $2; exit}')/boringNotch.app
+      | awk -F' = ' '/ BUILT_PRODUCTS_DIR /{print $2; exit}')"/Boring Notch.app"
 
 echo "==> building Release"
 xcodebuild -project boringNotch.xcodeproj -scheme boringNotch \
@@ -20,11 +22,12 @@ xcodebuild -project boringNotch.xcodeproj -scheme boringNotch \
 
 echo "==> stopping running instances"
 pkill -9 -f "MacOS/boringNotch" 2>/dev/null || true
+pkill -9 -f "MacOS/Boring Notch" 2>/dev/null || true
 sleep 2
 rm -f "$HOME/Library/Containers/theboringteam.boringnotch/Data/tmp/cn.sock"
 
 echo "==> installing"
-rm -rf "$APP"
+rm -rf "$APP" "$LEGACY_APP"
 cp -R "$REL" "$APP"
 xattr -dr com.apple.quarantine "$APP" 2>/dev/null || true
 
@@ -43,7 +46,7 @@ codesign --verify --strict "$APP" && echo "    signature OK"
 echo "==> launching"
 open -a "$APP"
 sleep 6
-if pgrep -f "/Applications/boringNotch.app/Contents/MacOS" >/dev/null; then
+if pgrep -f "$APP/Contents/MacOS" >/dev/null; then
   echo "    app is running"
 else
   echo "    ERROR: the app did not launch"

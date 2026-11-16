@@ -170,6 +170,34 @@ final class ClaudeIntegrationInstaller {
         Defaults[.claudeIntegrationEnabled] = true
     }
 
+    /// Os ganchos guardam o caminho absoluto da ponte. Se o app mudou de lugar
+    /// ou de nome (o upstream renomeia boringNotch.app para "Boring Notch.app"
+    /// no primeiro arranque), eles passam a chamar um arquivo que não existe
+    /// e o notch fica mudo sem aviso. Reescreve só nesse caso.
+    func repairIfMoved() {
+        guard isInstalled, let bridge = bridgePath,
+              let dir = try? claudeDirectory() else { return }
+        let current = "\"\(bridge)\""
+        let stale: Bool = dir.accessSecurityScopedResource { dir in
+            guard let json = try? loadSettings(dir.appendingPathComponent("settings.json")) else {
+                return false
+            }
+            var commands: [String] = []
+            if let cmd = (json["statusLine"] as? [String: Any])?["command"] as? String {
+                commands.append(cmd)
+            }
+            for case let entries as [[String: Any]] in (json["hooks"] as? [String: Any] ?? [:]).values {
+                for entry in entries {
+                    for hook in entry["hooks"] as? [[String: Any]] ?? [] {
+                        if let cmd = hook["command"] as? String { commands.append(cmd) }
+                    }
+                }
+            }
+            return commands.contains { $0.contains("claude-notch-bridge") && !$0.hasPrefix(current) }
+        }
+        if stale { try? install() }
+    }
+
     // MARK: Desinstalar
 
     func uninstall() throws {
