@@ -172,17 +172,12 @@ struct ContentView: View {
             && Defaults[.showClaudeInClosedNotch]
     }
 
-    /// O Claude esperando você passa na frente da música, mas não de uma
-    /// notificação: ela é passageira e some sozinha.
+    /// Trabalhando ou esperando você, o Claude passa na frente da música,
+    /// mas não de uma notificação: ela é passageira e some sozinha.
     private var claudeTakesPriority: Bool {
         claudeAllowedInClosedNotch
-            && claudeManager.needsUser
+            && claudeManager.hasAttention
             && notificationManager.activeNotification == nil
-    }
-
-    /// Trabalhando, o Claude só ocupa o lugar do rosto.
-    private var claudeFillsIdle: Bool {
-        claudeAllowedInClosedNotch && claudeManager.hasAttention
     }
 
     private var closedNotchContent: ClosedNotchContent {
@@ -200,7 +195,6 @@ struct ContentView: View {
         if !liveActivities.isEmpty, !vm.hideOnClosed {
             return .activities(liveActivities)
         }
-        if claudeFillsIdle { return .claude }
         if !coordinator.expandingView.show,
            !musicManager.isPlaying,
            musicManager.isPlayerIdle,
@@ -494,7 +488,7 @@ struct ContentView: View {
                           )
                               .transition(.opacity)
                       } else if claudeTakesPriority {
-                          // Só o que espera você passa na frente da música.
+                          // Trabalhando ou esperando você: na frente da música.
                           ClaudeLiveActivity(
                               notchHeight: vm.effectiveClosedNotchHeight,
                               notchWidth: vm.closedNotchSize.width,
@@ -511,14 +505,6 @@ struct ContentView: View {
                                       .frame(alignment: .center)
                               }
                           }
-                      } else if claudeFillsIdle {
-                          // Trabalhando: aparece no lugar do rosto, nunca da música.
-                          ClaudeLiveActivity(
-                              notchHeight: vm.effectiveClosedNotchHeight,
-                              notchWidth: vm.closedNotchSize.width,
-                              hasPhysicalNotch: vm.hasPhysicalNotch
-                          )
-                          .frame(alignment: .center)
                       } else if !coordinator.expandingView.show && vm.notchState == .closed && (!musicManager.isPlaying && musicManager.isPlayerIdle) && Defaults[.showNotHumanFace] && !vm.hideOnClosed {
                           BoringFaceAnimation()
                        } else if showsHeader {

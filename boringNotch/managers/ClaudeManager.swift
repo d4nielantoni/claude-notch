@@ -47,13 +47,10 @@ final class ClaudeManager: ObservableObject {
         sessions.first { $0.state.demandsAttention } ?? sessions.first
     }
 
+    /// Alguma sessão trabalhando ou esperando você: o Claude toma o notch
+    /// fechado, inclusive da música.
     var hasAttention: Bool {
         sessions.contains { $0.state.demandsAttention }
-    }
-
-    /// Alguma sessão parada esperando você. É o único caso que interrompe a música.
-    var needsUser: Bool {
-        sessions.contains { $0.state.needsUser }
     }
 
     // MARK: Entrada
