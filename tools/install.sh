@@ -11,6 +11,13 @@ cd "$(dirname "$0")/.."
 APP="/Applications/Boring Notch.app"
 # Nome antigo do produto: o upstream passou a gerar "Boring Notch.app".
 LEGACY_APP=/Applications/boringNotch.app
+
+# Assinatura estável: as permissões do macOS (Acessibilidade, que o OSD exige)
+# ficam presas à assinatura. A ad hoc ("-") muda a cada build e a permissão
+# some a cada instalação; um certificado Apple Development se mantém.
+SIGN=$(security find-identity -v -p codesigning 2>/dev/null \
+       | awk '/"Apple Development:/{print $2; exit}')
+SIGN=${SIGN:--}
 REL=$(xcodebuild -project boringNotch.xcodeproj -scheme boringNotch \
         -configuration Release -showBuildSettings 2>/dev/null \
       | awk -F' = ' '/ BUILT_PRODUCTS_DIR /{print $2; exit}')"/Boring Notch.app"
@@ -31,15 +38,15 @@ rm -rf "$APP" "$LEGACY_APP"
 cp -R "$REL" "$APP"
 xattr -dr com.apple.quarantine "$APP" 2>/dev/null || true
 
-echo "==> re-signing (inside out)"
+echo "==> re-signing (inside out) with ${SIGN}"
 for f in "$APP"/Contents/Frameworks/*.framework; do
-  codesign --force --sign - --timestamp=none "$f" >/dev/null 2>&1
+  codesign --force --sign "$SIGN" --timestamp=none "$f" >/dev/null 2>&1
 done
 for x in "$APP"/Contents/XPCServices/*.xpc; do
-  codesign --force --sign - --timestamp=none "$x" >/dev/null 2>&1
+  codesign --force --sign "$SIGN" --timestamp=none "$x" >/dev/null 2>&1
 done
-codesign --force --sign - --timestamp=none "$APP/Contents/Helpers/claude-notch-bridge" >/dev/null 2>&1
-codesign --force --sign - --timestamp=none \
+codesign --force --sign "$SIGN" --timestamp=none "$APP/Contents/Helpers/claude-notch-bridge" >/dev/null 2>&1
+codesign --force --sign "$SIGN" --timestamp=none \
   --entitlements boringNotch/boringNotch.entitlements "$APP" >/dev/null 2>&1
 codesign --verify --strict "$APP" && echo "    signature OK"
 
